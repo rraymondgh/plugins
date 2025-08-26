@@ -1,0 +1,13 @@
+{
+  "name": "multi_plugin",
+  "author": "Test",
+  "version": "1.0.0",
+  "description": "Test data for multiple services",
+  "website": "https://test.plugins.org/multi-plugin",
+  "capabilities": ["LifecycleManagement", "IntegrationTest"],
+  "permissions": {
+    "test": {
+      "reason": "For testing client functionality"
+    }
+  }
+}

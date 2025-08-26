@@ -1,0 +1,7 @@
+*.wasm
+bin/
+.direnv/
+*.gz
+plugins/wazero-*
+tmp/
+plugin_nav2

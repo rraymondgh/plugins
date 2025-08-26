@@ -1,0 +1,29 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  install-plugin-tools:
+    cmds:
+      - wget -O go-plugin.tar.gz https://github.com/knqyf263/go-plugin/releases/download/v0.9.0/go-plugin_0.9.0_linux-amd64.tar.gz
+      - mkdir -p bin
+      - tar -xvzf go-plugin.tar.gz -C bin
+      - wget -O go-jsonschema.tar.gz https://github.com/omissis/go-jsonschema/releases/download/v0.20.0/go-jsonschema_Linux_x86_64.tar.gz
+      - tar -xvf go-jsonschema.tar.gz -C bin
+
+
+  gen-plugin-schema:
+    cmds:
+      - bin/go-jsonschema --schema-root-type bitmagnet://plugins/manifest=PluginManifest -p schema --output schema/manifest_gen.go schema/manifest.schema.json
+
+  gen-protoc-plugin:
+    vars:
+      PROTO:
+        sh: find . -type f -name '*.proto'
+    cmds:
+      - for: { var: PROTO }
+        cmd: protoc --go-plugin_out=. --go-plugin_opt=paths=source_relative --plugin=bin/protoc-gen-go-plugin {{ .ITEM }}
+
+  test:
+    cmds:
+      - ginkgo run -r -v 

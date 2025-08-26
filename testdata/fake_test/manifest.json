@@ -1,0 +1,13 @@
+{
+  "name": "fake_test",
+  "author": "Plugin Test",
+  "version": "1.0.0",
+  "description": "Test data",
+  "website": "https://test.plugin.org/fake-test",
+  "capabilities": ["IntegrationTest"],
+  "permissions": {
+    "config": {
+      "reason": "To access plugin configuration"
+    }
+  }
+}
