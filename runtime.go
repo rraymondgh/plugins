@@ -15,6 +15,7 @@ import (
 
 	"github.com/dustin/go-humanize"
 	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/host/cache"
 	"github.com/rraymondgh/plugins/host/config"
 	"github.com/rraymondgh/plugins/host/http"
 	"github.com/rraymondgh/plugins/host/websocket"
@@ -126,6 +127,9 @@ func (m *managerImpl) setupHostServices(
 				config.Instantiate,
 				&configServiceImpl{pluginID: pluginID, config: m.config},
 			)
+		}},
+		{"cache", permissions.Cache != nil, func() (map[string]wazeroapi.FunctionDefinition, error) {
+			return loadHostLibrary[cache.CacheService](ctx, cache.Instantiate, newCacheService(pluginID))
 		}},
 		{"http", permissions.Http != nil, func() (map[string]wazeroapi.FunctionDefinition, error) {
 			httpPerms, err := parseHTTPPermissions(permissions.Http)

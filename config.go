@@ -21,8 +21,9 @@ type Config struct {
 
 func NewDefaultConfig() Config {
 	return Config{
-		Enabled:      true,
-		Folder:       "examples",
+		Enabled:      false,
+		Folder:       "/plugins/plugins",
+		CacheFolder:  "/plugins/cache",
 		PluginConfig: nil,
 	}
 }

@@ -90,6 +90,9 @@ func (j *PluginManifestCapabilitiesElem) UnmarshalJSON(value []byte) error {
 
 // Host services the plugin is allowed to access
 type PluginManifestPermissions struct {
+	// Cache corresponds to the JSON schema field "cache".
+	Cache *PluginManifestPermissionsCache `json:"cache,omitempty" yaml:"cache,omitempty" mapstructure:"cache,omitempty"`
+
 	// Config corresponds to the JSON schema field "config".
 	Config *PluginManifestPermissionsConfig `json:"config,omitempty" yaml:"config,omitempty" mapstructure:"config,omitempty"`
 
@@ -103,6 +106,33 @@ type PluginManifestPermissions struct {
 	Websocket *PluginManifestPermissionsWebsocket `json:"websocket,omitempty" yaml:"websocket,omitempty" mapstructure:"websocket,omitempty"`
 
 	AdditionalProperties interface{} `mapstructure:",remain"`
+}
+
+// Cache service permissions
+type PluginManifestPermissionsCache struct {
+	// Explanation of why this permission is needed
+	Reason string `json:"reason" yaml:"reason" mapstructure:"reason"`
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (j *PluginManifestPermissionsCache) UnmarshalJSON(value []byte) error {
+	var raw map[string]interface{}
+	if err := json.Unmarshal(value, &raw); err != nil {
+		return err
+	}
+	if _, ok := raw["reason"]; raw != nil && !ok {
+		return fmt.Errorf("field reason in PluginManifestPermissionsCache: required")
+	}
+	type Plain PluginManifestPermissionsCache
+	var plain Plain
+	if err := json.Unmarshal(value, &plain); err != nil {
+		return err
+	}
+	if len(plain.Reason) < 1 {
+		return fmt.Errorf("field %s length: must be >= %d", "reason", 1)
+	}
+	*j = PluginManifestPermissionsCache(plain)
+	return nil
 }
 
 // Configuration service permissions

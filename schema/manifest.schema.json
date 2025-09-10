@@ -102,6 +102,15 @@
             }
           ]
         },
+        "cache": {
+          "allOf": [
+            { "$ref": "#/$defs/basePermission" },
+            {
+              "type": "object",
+              "description": "Cache service permissions"
+            }
+          ]
+        },
         "test": {
           "allOf": [
             { "$ref": "#/$defs/basePermission" },

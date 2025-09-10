@@ -4,8 +4,7 @@
 
 Plugin system is a WebAssembly (WASM) based extension mechanism that enables developers to expand functionality without modifying the core codebase. The plugin system supports several capabilities that can be implemented by plugins:
 
-1. **Client** - For sending infohashes and magneturls to a client
-2. **LifecycleManagement** - For plugin initialization and configuration (one-time `OnInit` only; not invoked per-request)
+1. **LifecycleManagement** - For plugin initialization and configuration (one-time `OnInit` only; not invoked per-request)
 
 ## Plugin Architecture
 
@@ -21,16 +20,14 @@ The `Manager` (implemented in `plugins/manager.go`) is the core component that:
 
 ### 2. Plugin Protocol
 
-Plugins communicate with Navidrome using Protocol Buffers (protobuf) over a WASM runtime. The protocol is defined in `plugins/api/api.proto` which specifies the capabilities and messages that plugins can implement.
+Plugins communicate using Protocol Buffers (protobuf) over a WASM runtime. The protocol is defined in `plugins/api/api.proto` which specifies the capabilities and messages that plugins can implement.
 
 ### 3. Plugin Adapters
 
-Adapters bridge between the plugin API and Navidrome's internal interfaces:
+Adapters bridge between the plugin API and internal interfaces:
 
-- `wasmClient` adapts `Client` to the internal `client.Interface`
-
-* **Plugin Instance Pooling**: Instances are managed in an internal pool (default 8 max, 1m TTL).
-* **WASM Compilation & Caching**: Modules are pre-compiled concurrently (max 2) and cached in `[CacheFolder]/plugins`, reducing startup time. The compilation timeout can be configured via `DevPluginCompilationTimeout` in development.
+- **Plugin Instance Pooling**: Instances are managed in an internal pool (default 8 max, 1m TTL).
+- **WASM Compilation & Caching**: Modules are pre-compiled concurrently (max 2) and cached in `[CacheFolder]/plugins`, reducing startup time. The compilation timeout can be configured via `DevPluginCompilationTimeout` in development.
 
 ### 4. Host Services
 
@@ -69,7 +66,6 @@ service ConfigService {
 ```
 
 The ConfigService allows plugins to access plugin-specific configuration. See the [config.proto](host/config/config.proto) file for the full API.
-
 
 #### WebSocketService
 
@@ -140,7 +136,6 @@ _, err = websocket.Close(ctx, &websocket.CloseRequest{
 })
 ```
 
-
 ## Plugin Permission System
 
 Implements a permission-based security system that controls which host services plugins can access. This system enforces security at load-time by only making authorized services available to plugins in their WebAssembly runtime environment.
@@ -186,7 +181,7 @@ Each permission is represented as a key in the permissions object. The value mus
 
 - **`http`**: Requires `allowedUrls` object mapping URL patterns to allowed HTTP methods, and optional `allowLocalNetwork` boolean
 - **`websocket`**: Requires `allowedUrls` array of WebSocket URL patterns, and optional `allowLocalNetwork` boolean
-- **`config`**, **`cache`**, **`scheduler`**, **`artwork`**: Only require the `reason` field
+- **`config`**, **`cache`**: Only require the `reason` field
 
 **Security Benefits of Required Reasons:**
 
@@ -201,11 +196,11 @@ If no permissions are needed, use an empty permissions object: `"permissions": {
 
 The following permission keys correspond to host services:
 
-| Permission    | Host Service       | Description                                        | Required Fields                                       |
-| ------------- | ------------------ | -------------------------------------------------- | ----------------------------------------------------- |
-| `http`        | HttpService        | Make HTTP requests (GET, POST, PUT, DELETE, etc..) | `reason`, `allowedUrls`                               |
-| `websocket`   | WebSocketService   | Connect to and communicate via WebSockets          | `reason`, `allowedUrls`                               |
-| `config`      | ConfigService      | Access Navidrome configuration values              | `reason`                                              |
+| Permission  | Host Service     | Description                                        | Required Fields         |
+| ----------- | ---------------- | -------------------------------------------------- | ----------------------- |
+| `http`      | HttpService      | Make HTTP requests (GET, POST, PUT, DELETE, etc..) | `reason`, `allowedUrls` |
+| `websocket` | WebSocketService | Connect to and communicate via WebSockets          | `reason`, `allowedUrls` |
+| `config`    | ConfigService    | Access configuration values                        | `reason`                |
 
 #### HTTP Permission Structure
 
@@ -258,7 +253,6 @@ WebSocket permissions require explicit URL whitelisting:
 - `reason` (required): Explanation of why WebSocket access is needed
 - `allowedUrls` (required): Array of WebSocket URL patterns (must start with `ws://` or `wss://`)
 - `allowLocalNetwork` (optional, default false): Whether to allow connections to localhost/private IPs
-
 
 ### Permission Validation
 
@@ -409,7 +403,7 @@ func (p *Plugin) GetArtistInfo(ctx context.Context, req *api.ArtistInfoRequest) 
 
 **Permission silently ignored**
 
-- Cause: Using a permission key not recognized by current Navidrome version
+- Cause: Using a permission key not recognized by current version
 - Effect: The unknown permission is silently ignored (no error or warning)
 - Solution: This is actually normal behavior for forward compatibility
 
@@ -464,9 +458,9 @@ This framework significantly simplifies plugin development by handling the low-l
 
 ### 3. Protocol Buffers (Protobuf)
 
-[Protocol Buffers](https://developers.google.com/protocol-buffers) serve as the interface definition language for the plugin system. Navidrome uses:
+[Protocol Buffers](https://developers.google.com/protocol-buffers) serve as the interface definition language for the plugin system. Plugins Library uses:
 
-- **protoc-gen-go-plugin**: A custom protobuf compiler plugin that generates Go code for both the Navidrome host and WebAssembly plugins
+- **protoc-gen-go-plugin**: A custom protobuf compiler plugin that generates Go code for both the host and WebAssembly plugins
 - Protobuf messages for structured data exchange between the host and plugins
 
 The protobuf definitions are located in:
@@ -492,7 +486,7 @@ Each plugin method call:
 3. Converts data between Go and WebAssembly formats using the protobuf-generated code
 4. Cleans up the instance after the call completes
 
-This stateless design ensures that plugins remain isolated and can't interfere with Navidrome's core functionality or each other.
+This stateless design ensures that plugins remain isolated and can't interfere with application core functionality or each other.
 
 ## Configuration
 
@@ -513,7 +507,6 @@ By default, the plugins folder is created under `[DataFolder]/plugins` with rest
 ### Plugin-specific Configuration
 
 Plugin-specific configuration using the `plugin_config` section. Each plugin can have its own configuration map using the **folder name** as the key.
-
 
 These configuration values are passed to plugins during initialization through the `OnInit` method in the `LifecycleManagement` capability.
 Plugins that implement the `LifecycleManagement` capability will receive their configuration as a map of string keys and values.
@@ -559,9 +552,9 @@ All three plugins can have the same `"name": "LastFM Agent"` in their manifest, 
 
 ```bash
 # Load specific variants
-navidrome plugin refresh lastfm-official
-navidrome plugin refresh lastfm-custom
-navidrome plugin refresh lastfm-dev
+app plugin refresh lastfm-official
+app plugin refresh lastfm-custom
+app plugin refresh lastfm-dev
 
 # Configure each variant separately
 [PluginConfig.lastfm-official]
@@ -573,13 +566,13 @@ api_key = "development-key"
 
 ### Using Symlinks for Plugin Variants
 
-Symlinks provide a powerful way to create multiple configurations for the same plugin without duplicating files. When you create a symlink to a plugin directory, Navidrome treats the symlink as a separate plugin with its own configuration.
+Symlinks provide a powerful way to create multiple configurations for the same plugin without duplicating files. When you create a symlink to a plugin directory, Plugins treats the symlink as a separate plugin with its own configuration.
 
 **Example: Discord Rich Presence with Multiple Configurations**
 
 ```bash
 # Create symlinks for different environments
-cd /path/to/navidrome/plugins
+cd /path/to/app/plugins
 ln -s /path/to/discord-rich-presence-plugin drp-prod
 ln -s /path/to/discord-rich-presence-plugin drp-dev
 ln -s /path/to/discord-rich-presence-plugin drp-test
@@ -621,12 +614,12 @@ users = "testuser:test-token"
 
 - The **symlink name** (not the target folder name) is used as the plugin ID
 - Configuration keys use the symlink name: `PluginConfig.<symlink-name>`
-- Each symlink appears as a separate plugin in `navidrome plugin list`
-- CLI commands use the symlink name: `navidrome plugin refresh drp-dev`
+- Each symlink appears as a separate plugin in `app plugin list`
+- CLI commands use the symlink name: `app plugin refresh drp-dev`
 
 ## Plugin Package Format (.ndp)
 
-Navidrome Plugin Packages (.ndp) are ZIP archives that bundle all files needed for a plugin. They can be installed using the `navidrome plugin install` command.
+Plugin Packages (.ndp) are ZIP archives that bundle all files needed for a plugin. They can be installed using the `app plugin install` command.
 
 ### Package Structure
 
@@ -652,41 +645,41 @@ To create a plugin package:
 
 ### Installing a Plugin Package
 
-Use the Navidrome CLI to install plugins:
+Use the CLI to install plugins:
 
 ```bash
-navidrome plugin install /path/to/plugin-name.ndp
+app plugin install /path/to/plugin-name.ndp
 ```
 
 This will extract the plugin to a directory in your configured plugins folder.
 
 ## Plugin Management
 
-Navidrome provides a command-line interface for managing plugins. To use these commands, the plugin system must be enabled in your configuration.
+Plugin library provides a command-line interface for managing plugins. To use these commands, the plugin system must be enabled in your configuration.
 
 ### Available Commands
 
 ```bash
 # List all installed plugins
-navidrome plugin list
+app plugin list
 
 # Show detailed information about a plugin package or installed plugin
-navidrome plugin info plugin-name-or-package.ndp
+app plugin info plugin-name-or-package.ndp
 
 # Install a plugin from a .ndp file
-navidrome plugin install /path/to/plugin.ndp
+app plugin install /path/to/plugin.ndp
 
 # Remove an installed plugin (use folder name)
-navidrome plugin remove plugin-folder-name
+app plugin remove plugin-folder-name
 
 # Update an existing plugin
-navidrome plugin update /path/to/updated-plugin.ndp
+app plugin update /path/to/updated-plugin.ndp
 
-# Reload a plugin without restarting Navidrome (use folder name)
-navidrome plugin refresh plugin-folder-name
+# Reload a plugin without restarting app (use folder name)
+app plugin refresh plugin-folder-name
 
 # Create a symlink to a plugin development folder
-navidrome plugin dev /path/to/dev/folder
+app plugin dev /path/to/dev/folder
 ```
 
 ### Plugin Development
@@ -696,10 +689,10 @@ The `dev` and `refresh` commands are particularly useful for plugin development:
 #### Development Workflow
 
 1. Create a plugin development folder with required files (`manifest.json` and `plugin.wasm`)
-2. Run `navidrome plugin dev /path/to/your/plugin` to create a symlink in the plugins directory
+2. Run `app plugin dev /path/to/your/plugin` to create a symlink in the plugins directory
 3. Make changes to your plugin code
 4. Recompile the WebAssembly module
-5. Run `navidrome plugin refresh your-plugin-folder-name` to reload the plugin without restarting Navidrome
+5. Run `app plugin refresh your-plugin-folder-name` to reload the plugin without restarting app
 
 The `dev` command creates a symlink from your development folder to the plugins directory, allowing you to edit the plugin files directly in your development environment without copying them to the plugins directory after each change.
 
@@ -708,16 +701,16 @@ The refresh process:
 - Reloads the plugin manifest
 - Recompiles the WebAssembly module
 - Updates the plugin registration
-- Makes the updated plugin immediately available to Navidrome
+- Makes the updated plugin immediately available to app
 
 ### Plugin Security
 
-Navidrome provides multiple layers of security for plugin execution:
+Plugin library provides multiple layers of security for plugin execution:
 
 1. **WebAssembly Sandbox**: Plugins run in isolated WebAssembly environments with no direct system access
 2. **Permission System**: Plugins can only access host services they explicitly request in their manifest (see [Plugin Permission System](#plugin-permission-system))
-3. **File System Security**: The plugins folder is configured with restricted permissions (0700) accessible only by the user running Navidrome
-4. **Resource Isolation**: Each plugin instance is isolated and cannot interfere with other plugins or core Navidrome functionality
+3. **File System Security**: The plugins folder is configured with restricted permissions (0700) accessible only by the user running app
+4. **Resource Isolation**: Each plugin instance is isolated and cannot interfere with other plugins or core app functionality
 
 The permission system ensures that plugins follow the principle of least privilege - they start with no access to host services and must explicitly declare what they need. This prevents malicious or poorly written plugins from accessing unauthorized functionality.
 
@@ -1011,7 +1004,7 @@ _, err = websocket.Close(ctx, &websocket.CloseRequest{
 
 ## Host Services
 
-Navidrome provides several host services that plugins can use to interact with external systems and access functionality. Plugins must declare permissions for each service they want to use in their `manifest.json`.
+Plugin library provides several host services that plugins can use to interact with external systems and access functionality. Plugins must declare permissions for each service they want to use in their `manifest.json`.
 
 ### HTTP Service
 
@@ -1127,7 +1120,7 @@ The HTTP service implements several security features:
 #### Making HTTP Requests
 
 ```go
-import "github.com/navidrome/navidrome/plugins/host/http"
+import "github.com/rraymondgh/plugins/host/http"
 
 // GET request
 resp, err := httpClient.Get(ctx, &http.HttpRequest{
@@ -1250,7 +1243,7 @@ Plugins should use the standard error values (`plugin:not_found`, `plugin:not_im
 
 ## Plugin Lifecycle and Statelessness
 
-**Important**: Navidrome plugins are stateless. Each method call creates a new plugin instance which is destroyed afterward. This has several important implications:
+**Important**: Plugins are stateless. Each method call creates a new plugin instance which is destroyed afterward. This has several important implications:
 
 1. **No in-memory persistence**: Plugins cannot store state between method calls in memory
 2. **Each call is isolated**: Variables, configurations, and runtime state don't persist between calls
@@ -1389,6 +1382,6 @@ The optimization is transparent to plugin developers and automatically activates
    - Verify the plugin is compatible with the current API version
 
 4. **Runtime errors**:
-   - Look for error messages in the Navidrome logs
+   - Look for error messages in the app logs
    - Add debug logging to your plugin
    - Check if the error is permission-related before debugging plugin logic
