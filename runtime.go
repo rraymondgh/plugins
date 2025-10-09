@@ -22,6 +22,7 @@ import (
 	"github.com/rraymondgh/plugins/schema"
 	"github.com/tetratelabs/wazero"
 	wazeroapi "github.com/tetratelabs/wazero/api"
+	"github.com/tetratelabs/wazero/imports/assemblyscript"
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapio"
@@ -378,6 +379,8 @@ func combineLibraries(ctx context.Context, r wazero.Runtime, libs ...map[string]
 
 	// Create the combined host module
 	envBuilder := r.NewHostModuleBuilder("env")
+
+	assemblyscript.NewFunctionExporter().ExportFunctions(envBuilder)
 
 	for name, fd := range hostLib {
 		fn, ok := fd.GoFunction().(wazeroapi.GoModuleFunction)

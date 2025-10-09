@@ -25,6 +25,7 @@
             protobuf
             protoc-gen-go
             ginkgo
+            nodejs
           ];
         };
       };

@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "as-proto": "^1.3.0"
+  },
+  "devDependencies": {
+    "as-proto-gen": "^1.3.0",
+    "assemblyscript": "^0.28.8"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@rraymondgh/plugins",
+  "description": "assemblyscript protobuf classes",
+  "version": "0.0.3",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rraymondgh/plugins.git"
+  },
+  "license": "MIT"
+}

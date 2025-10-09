@@ -5,3 +5,4 @@ bin/
 plugins/wazero-*
 tmp/
 plugin_nav2
+node_modules/
