@@ -14,7 +14,8 @@ import (
 	"time"
 
 	"github.com/dustin/go-humanize"
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/lifecycleapi"
+	"github.com/rraymondgh/plugins/asruntime"
 	"github.com/rraymondgh/plugins/host/cache"
 	"github.com/rraymondgh/plugins/host/config"
 	"github.com/rraymondgh/plugins/host/http"
@@ -22,7 +23,6 @@ import (
 	"github.com/rraymondgh/plugins/schema"
 	"github.com/tetratelabs/wazero"
 	wazeroapi "github.com/tetratelabs/wazero/api"
-	"github.com/tetratelabs/wazero/imports/assemblyscript"
 	"github.com/tetratelabs/wazero/imports/wasi_snapshot_preview1"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapio"
@@ -42,7 +42,7 @@ var (
 func (m *managerImpl) createRuntime(
 	pluginID string,
 	permissions schema.PluginManifestPermissions,
-) api.WazeroNewRuntime {
+) lifecycleapi.WazeroNewRuntime {
 	return func(ctx context.Context) (wazero.Runtime, error) {
 		// Check if runtime already exists
 		if rt, ok := runtimePool.Load(pluginID); ok {
@@ -176,7 +176,7 @@ func (m *managerImpl) setupHostServices(
 		zap.String("plugin", pluginID), zap.Any("permissions", grantedPermissions))
 
 	// Combine the permitted libraries
-	return combineLibraries(ctx, r, libraries...)
+	return combineLibraries(ctx, r, pluginID, m.config, libraries...)
 }
 
 // purgeCacheBySize removes the oldest files in dir until its total size is
@@ -370,7 +370,13 @@ func loadHostLibrary[S any](
 }
 
 // combineLibraries combines the given host libraries into a single "env" module
-func combineLibraries(ctx context.Context, r wazero.Runtime, libs ...map[string]wazeroapi.FunctionDefinition) error {
+func combineLibraries(
+	ctx context.Context,
+	r wazero.Runtime,
+	pluginID string,
+	cfg *Config,
+	libs ...map[string]wazeroapi.FunctionDefinition,
+) error {
 	// Merge the libraries
 	hostLib := map[string]wazeroapi.FunctionDefinition{}
 	for _, lib := range libs {
@@ -380,7 +386,7 @@ func combineLibraries(ctx context.Context, r wazero.Runtime, libs ...map[string]
 	// Create the combined host module
 	envBuilder := r.NewHostModuleBuilder("env")
 
-	assemblyscript.NewFunctionExporter().ExportFunctions(envBuilder)
+	asruntime.AssemblyscriptExports(envBuilder, pluginID, cfg.PluginLogging)
 
 	for name, fd := range hostLib {
 		fn, ok := fd.GoFunction().(wazeroapi.GoModuleFunction)

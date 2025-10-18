@@ -7,12 +7,12 @@ import (
 	"errors"
 	"log"
 
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/lifecycleapi"
 )
 
 type initServicePlugin struct{}
 
-func (p *initServicePlugin) OnInit(ctx context.Context, req *api.InitRequest) (*api.InitResponse, error) {
+func (p *initServicePlugin) OnInit(ctx context.Context, req *lifecycleapi.InitRequest) (*lifecycleapi.InitResponse, error) {
 	log.Printf("OnInit called with %v", req)
 
 	// Check for specific error conditions in the config
@@ -22,7 +22,7 @@ func (p *initServicePlugin) OnInit(ctx context.Context, req *api.InitRequest) (*
 			case "go_error":
 				return nil, errors.New("initialization failed with Go error")
 			case "response_error":
-				return &api.InitResponse{
+				return &lifecycleapi.InitResponse{
 					Error: "initialization failed with response error",
 				}, nil
 			}
@@ -30,7 +30,7 @@ func (p *initServicePlugin) OnInit(ctx context.Context, req *api.InitRequest) (*
 	}
 
 	// Default: successful initialization
-	return &api.InitResponse{}, nil
+	return &lifecycleapi.InitResponse{}, nil
 }
 
 // Required by Go WASI build
@@ -38,5 +38,5 @@ func main() {}
 
 // Register the LifecycleManagement implementation
 func init() {
-	api.RegisterLifecycleManagement(&initServicePlugin{})
+	lifecycleapi.RegisterLifecycleManagement(&initServicePlugin{})
 }

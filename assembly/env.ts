@@ -29,3 +29,5 @@ export declare function connect(offset: usize, size: usize): u64;
 export declare function send_text(offset: usize, size: usize): u64;
 export declare function send_binary(offset: usize, size: usize): u64;
 export declare function close(offset: usize, size: usize): u64;
+
+export declare function nanosecond(): i64;

@@ -1,7 +1,7 @@
 {
   "name": "@rraymondgh/plugins",
   "description": "assemblyscript protobuf classes",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rraymondgh/plugins.git"

@@ -10,7 +10,7 @@ import (
 
 	gorillaws "github.com/gorilla/websocket"
 	gonanoid "github.com/matoous/go-nanoid/v2"
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/websocketapi"
 	"github.com/rraymondgh/plugins/host/websocket"
 	"go.uber.org/zap"
 )
@@ -372,7 +372,7 @@ func (s *websocketService) handleMessages(internalID string, conn *WebSocketConn
 func (s *websocketService) executeCallback(
 	ctx context.Context,
 	pluginID, methodName string,
-	fn func(context.Context, api.WebSocketCallback) error,
+	fn func(context.Context, websocketapi.WebSocketCallback) error,
 ) {
 	zap.L().Debug("WebSocket received")
 
@@ -385,7 +385,7 @@ func (s *websocketService) executeCallback(
 		return
 	}
 
-	_, _ = CallMethod(ctx, p, methodName, func(inst api.WebSocketCallback) (struct{}, error) {
+	_, _ = CallMethod(ctx, p, methodName, func(inst websocketapi.WebSocketCallback) (struct{}, error) {
 		// Call the appropriate callback function
 		zap.L().Debug("Executing WebSocket callback")
 
@@ -408,7 +408,7 @@ func (s *websocketService) notifyTextCallback(
 	conn *WebSocketConnection,
 	message string,
 ) {
-	req := &api.OnTextMessageRequest{
+	req := &websocketapi.OnTextMessageRequest{
 		ConnectionId: connectionID,
 		Message:      message,
 	}
@@ -419,7 +419,7 @@ func (s *websocketService) notifyTextCallback(
 		ctx,
 		conn.PluginName,
 		"OnTextMessage",
-		func(ctx context.Context, plugin api.WebSocketCallback) error {
+		func(ctx context.Context, plugin websocketapi.WebSocketCallback) error {
 			_, err := checkErr(plugin.OnTextMessage(ctx, req))
 			return err
 		},
@@ -433,7 +433,7 @@ func (s *websocketService) notifyBinaryCallback(
 	conn *WebSocketConnection,
 	data []byte,
 ) {
-	req := &api.OnBinaryMessageRequest{
+	req := &websocketapi.OnBinaryMessageRequest{
 		ConnectionId: connectionID,
 		Data:         data,
 	}
@@ -444,7 +444,7 @@ func (s *websocketService) notifyBinaryCallback(
 		ctx,
 		conn.PluginName,
 		"OnBinaryMessage",
-		func(ctx context.Context, plugin api.WebSocketCallback) error {
+		func(ctx context.Context, plugin websocketapi.WebSocketCallback) error {
 			_, err := checkErr(plugin.OnBinaryMessage(ctx, req))
 			return err
 		},
@@ -458,7 +458,7 @@ func (s *websocketService) notifyErrorCallback(
 	conn *WebSocketConnection,
 	errorMsg string,
 ) {
-	req := &api.OnErrorRequest{
+	req := &websocketapi.OnErrorRequest{
 		ConnectionId: connectionID,
 		Error:        errorMsg,
 	}
@@ -469,7 +469,7 @@ func (s *websocketService) notifyErrorCallback(
 		ctx,
 		conn.PluginName,
 		"OnError",
-		func(ctx context.Context, plugin api.WebSocketCallback) error {
+		func(ctx context.Context, plugin websocketapi.WebSocketCallback) error {
 			_, err := checkErr(plugin.OnError(ctx, req))
 			return err
 		},
@@ -484,7 +484,7 @@ func (s *websocketService) notifyCloseCallback(
 	code int,
 	reason string,
 ) {
-	req := &api.OnCloseRequest{
+	req := &websocketapi.OnCloseRequest{
 		ConnectionId: connectionID,
 		Code:         int32(code),
 		Reason:       reason,
@@ -496,7 +496,7 @@ func (s *websocketService) notifyCloseCallback(
 		ctx,
 		conn.PluginName,
 		"OnClose",
-		func(ctx context.Context, plugin api.WebSocketCallback) error {
+		func(ctx context.Context, plugin websocketapi.WebSocketCallback) error {
 			_, err := checkErr(plugin.OnClose(ctx, req))
 			return err
 		},

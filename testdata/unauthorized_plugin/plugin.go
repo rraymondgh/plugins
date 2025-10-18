@@ -6,6 +6,7 @@ import (
 	"context"
 
 	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/testapi"
 	"github.com/rraymondgh/plugins/host/http"
 )
 
@@ -13,7 +14,7 @@ type UnauthorizedPlugin struct{}
 
 var ErrNotFound = api.ErrNotFound
 
-func (UnauthorizedPlugin) SendTo(ctx context.Context, req *api.TestSendToRequest) (*api.TestSendToResponse, error) {
+func (UnauthorizedPlugin) ConfigTest(ctx context.Context, req *testapi.SimpleRequest) (*testapi.SimpleResponse, error) {
 	// This plugin attempts to make an HTTP call without having HTTP permission
 	// This should fail since the plugin has no permissions in its manifest
 	httpClient := http.NewHttpService()
@@ -32,14 +33,18 @@ func (UnauthorizedPlugin) SendTo(ctx context.Context, req *api.TestSendToRequest
 		return nil, err
 	}
 
-	return &api.TestSendToResponse{
+	return &testapi.SimpleResponse{
 		Message: "https://example.com/unauthorized",
 	}, nil
+}
+
+func (UnauthorizedPlugin) HTTPTest(_ context.Context, _ *testapi.HttpRequest) (*testapi.SimpleResponse, error) {
+	return nil, nil
 }
 
 func main() {}
 
 // Register the plugin implementation
 func init() {
-	api.RegisterIntegrationTest(UnauthorizedPlugin{})
+	testapi.RegisterIntegrationTest(UnauthorizedPlugin{})
 }

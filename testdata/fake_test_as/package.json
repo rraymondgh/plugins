@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "build": "asc plugin.ts --config ../asconfig.json -o plugin.wasm --target json"
+  }
+}

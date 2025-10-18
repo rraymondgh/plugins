@@ -41,11 +41,7 @@
       "minItems": 1,
       "items": {
         "type": "string",
-        "enum": [
-          "IntegrationTest",
-          "LifecycleManagement",
-          "WebSocketCallback"
-        ]
+        "enum": ["IntegrationTest", "LifecycleManagement", "WebSocketCallback"]
       }
     },
     "permissions": {

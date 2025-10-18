@@ -49,8 +49,10 @@ var _ = Describe("Plugin Manager", func() {
 		Expect(initServiceNames).To(ContainElements("multi_plugin", "fake_init_service"))
 
 		testNames := mgr.PluginNames(CapabilityIntegrationTest)
-		Expect(testNames).To(HaveLen(3))
-		Expect(testNames).To(ContainElements("fake_test", "unauthorized_plugin", "multi_plugin"))
+		Expect(testNames).To(HaveLen(4))
+		Expect(
+			testNames,
+		).To(ContainElements("fake_test", "fake_test_as", "unauthorized_plugin", "multi_plugin"))
 	})
 
 	It("should load a test plugin and invoke intergration test methods", func() {
@@ -60,7 +62,7 @@ var _ = Describe("Plugin Manager", func() {
 		testRPC, ok := plugin.(IntegrationTestInterface)
 		Expect(ok).To(BeTrue(), "plugin should implement IntegrationTestInterface")
 
-		msg, err := testRPC.SendTo(ctx, "1234567890")
+		msg, err := testRPC.ConfigTest(ctx, "1234567890")
 		Expect(err).NotTo(HaveOccurred())
 		Expect(msg).To(Equal("1234567890"))
 	})
@@ -153,7 +155,7 @@ var _ = Describe("Plugin Manager", func() {
 			testRPC, ok := plugin.(IntegrationTestInterface)
 			Expect(ok).To(BeTrue(), "plugin should implement IntegrationTest")
 
-			msg, err := testRPC.SendTo(ctx, "1234567890")
+			msg, err := testRPC.ConfigTest(ctx, "1234567890")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(msg).To(Equal("1234567890"))
 		})
@@ -189,7 +191,7 @@ var _ = Describe("Plugin Manager", func() {
 			Expect(fakeTest).NotTo(BeNil(), "fake_test should be loaded")
 
 			// Test SendTo method - need to cast to the specific interface
-			info, err := fakeTest.SendTo(ctx, "Test Test")
+			info, err := fakeTest.ConfigTest(ctx, "Test Test")
 			Expect(err).NotTo(HaveOccurred())
 			Expect(info).To(Equal("Test Test"))
 		})
@@ -210,7 +212,7 @@ var _ = Describe("Plugin Manager", func() {
 			// 2. Return an error when trying to call config methods
 
 			// Try to use one of the available methods - let's test with SendTo
-			_, err := intTest.SendTo(ctx, "id")
+			_, err := intTest.ConfigTest(ctx, "id")
 			if err != nil {
 				// If there's an error, it should be related to missing permissions
 				Expect(err.Error()).To(ContainSubstring(""))

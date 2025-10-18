@@ -21,6 +21,8 @@ func (c *configServiceImpl) GetPluginConfig(
 	}
 
 	return &config.GetPluginConfigResponse{
-		Config: cfg,
+		Config:         cfg,
+		LoggingEnabled: c.config.PluginLogging,
+		PluginID:       c.pluginID,
 	}, nil
 }

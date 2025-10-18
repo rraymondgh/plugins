@@ -3,7 +3,7 @@ package plugins
 import (
 	"context"
 
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/websocketapi"
 	"github.com/rraymondgh/plugins/core/metrics"
 	"github.com/tetratelabs/wazero"
 	"go.uber.org/zap"
@@ -16,10 +16,10 @@ func newWasmWebSocketCallback(
 	runtime func(context.Context) (wazero.Runtime, error),
 	mc wazero.ModuleConfig,
 ) WasmPlugin {
-	loader, err := api.NewWebSocketCallbackPlugin(
+	loader, err := websocketapi.NewWebSocketCallbackPlugin(
 		context.Background(),
-		api.WazeroRuntime(runtime),
-		api.WazeroModuleConfig(mc),
+		websocketapi.WazeroRuntime(runtime),
+		websocketapi.WazeroModuleConfig(mc),
 	)
 	if err != nil {
 		zap.L().Error("Error creating WebSocket callback plugin",
@@ -28,13 +28,20 @@ func newWasmWebSocketCallback(
 	}
 
 	return &wasmWebSocketCallback{
-		BaseCapability: NewBaseCapability[api.WebSocketCallback, *api.WebSocketCallbackPlugin](
+		BaseCapability: NewBaseCapability[
+			websocketapi.WebSocketCallback,
+			*websocketapi.WebSocketCallbackPlugin,
+		](
 			wasmPath,
 			pluginID,
 			CapabilityWebSocketCallback,
 			metrics,
 			loader,
-			func(ctx context.Context, l *api.WebSocketCallbackPlugin, path string) (api.WebSocketCallback, error) {
+			func(
+				ctx context.Context,
+				l *websocketapi.WebSocketCallbackPlugin,
+				path string,
+			) (websocketapi.WebSocketCallback, error) {
 				return l.Load(ctx, path)
 			},
 		),
@@ -43,5 +50,5 @@ func newWasmWebSocketCallback(
 
 // wasmWebSocketCallback adapts a WebSocketCallback plugin
 type wasmWebSocketCallback struct {
-	*BaseCapability[api.WebSocketCallback, *api.WebSocketCallbackPlugin]
+	*BaseCapability[websocketapi.WebSocketCallback, *websocketapi.WebSocketCallbackPlugin]
 }

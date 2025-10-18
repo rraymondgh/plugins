@@ -17,13 +17,15 @@ type Config struct {
 	PluginConfig                map[string]map[string]string
 	CacheFolder                 string
 	DevPluginCompilationTimeout time.Duration
+	PluginLogging               bool
 }
 
 func NewDefaultConfig() Config {
 	return Config{
-		Enabled:      false,
-		Folder:       "/plugins/plugins",
-		CacheFolder:  "/plugins/cache",
-		PluginConfig: nil,
+		Enabled:       false,
+		Folder:        "/plugins/plugins",
+		CacheFolder:   "/plugins/cache",
+		PluginConfig:  nil,
+		PluginLogging: false,
 	}
 }

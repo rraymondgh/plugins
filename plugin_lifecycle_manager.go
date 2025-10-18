@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/lifecycleapi"
 	"github.com/rraymondgh/plugins/consts"
 	"github.com/rraymondgh/plugins/core/metrics"
 	"go.uber.org/zap"
@@ -58,10 +58,10 @@ func (m *pluginLifecycleManager) callOnInit(plugin *plugin) error {
 	start := time.Now()
 
 	// Create LifecycleManagement plugin instance
-	loader, err := api.NewLifecycleManagementPlugin(
+	loader, err := lifecycleapi.NewLifecycleManagementPlugin(
 		ctx,
-		api.WazeroRuntime(plugin.Runtime),
-		api.WazeroModuleConfig(plugin.ModConfig),
+		lifecycleapi.WazeroRuntime(plugin.Runtime),
+		lifecycleapi.WazeroModuleConfig(plugin.ModConfig),
 	)
 	if loader == nil || err != nil {
 		zap.L().
@@ -78,7 +78,7 @@ func (m *pluginLifecycleManager) callOnInit(plugin *plugin) error {
 	defer initPlugin.Close(ctx)
 
 	// Prepare the request with plugin-specific configuration
-	req := &api.InitRequest{}
+	req := &lifecycleapi.InitRequest{}
 
 	// Add plugin configuration if available
 	if m.config != nil {

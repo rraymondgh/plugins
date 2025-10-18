@@ -1,0 +1,193 @@
+[
+  {
+    "title": "Baywat**",
+    "originalTitle": "Baywat**",
+    "originalLanguage": {
+      "id": 1,
+      "name": "Englis*"
+    },
+    "alternateTitles": [
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "海滩游侠",
+        "id": 513
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "生死海滩",
+        "id": 514
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "护滩使者",
+        "id": 515
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "Guardi****************",
+        "id": 516
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "Baywat*******",
+        "id": 517
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "베이워치: **********",
+        "id": 518
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 70,
+        "title": "Baywat**************************",
+        "id": 7233
+      }
+    ],
+    "secondaryYearSourceId": 0,
+    "sortTitle": "baywat**",
+    "sizeOnDisk": 940311188,
+    "status": "releas**",
+    "overview": "Devote****************************************************************************************************************************************************",
+    "inCinemas": "2017-0**************",
+    "physicalRelease": "2017-0**************",
+    "digitalRelease": "2017-0**************",
+    "releaseDate": "2017-0**************",
+    "images": [
+      {
+        "coverType": "poster",
+        "url": "/Media************************************************",
+        "remoteUrl": "https:*************************************************************"
+      },
+      {
+        "coverType": "fanart",
+        "url": "/Media************************************************",
+        "remoteUrl": "https:*************************************************************"
+      }
+    ],
+    "website": "",
+    "year": 2017,
+    "youTubeTrailerId": "eyKOgn*****",
+    "studio": "Unchar***",
+    "path": "/movie*****************",
+    "qualityProfileId": 1,
+    "hasFile": true,
+    "movieFileId": 4063,
+    "monitored": true,
+    "minimumAvailability": "releas**",
+    "isAvailable": true,
+    "folderName": "/movie*****************",
+    "runtime": 116,
+    "cleanTitle": "baywat**",
+    "imdbId": "tt1469***",
+    "tmdbId": 339846,
+    "titleSlug": "339846",
+    "rootFolderPath": "/movie*",
+    "certification": "R",
+    "genres": [
+      "Comedy",
+      "Action",
+      "Crime"
+    ],
+    "keywords": [
+      "beach",
+      "drug d*****",
+      "life-s****",
+      "lifegu***",
+      "rookie",
+      "sea",
+      "vigila*****",
+      "yacht"
+    ],
+    "tags": [],
+    "added": "2023-0**************",
+    "ratings": {
+      "imdb": {
+        "votes": 214288,
+        "value": 5.5,
+        "type": "user"
+      },
+      "tmdb": {
+        "votes": 8296,
+        "value": 6.093,
+        "type": "user"
+      },
+      "metacritic": {
+        "votes": 0,
+        "value": 37,
+        "type": "user"
+      },
+      "rottenTomatoes": {
+        "votes": 0,
+        "value": 18,
+        "type": "user"
+      },
+      "trakt": {
+        "votes": 21143,
+        "value": 6.5005,
+        "type": "user"
+      }
+    },
+    "movieFile": {
+      "movieId": 70,
+      "relativePath": "Baywat***********************",
+      "path": "/movie***********************************************",
+      "size": 940311188,
+      "dateAdded": "2025-0**************",
+      "edition": "",
+      "languages": [
+        {
+          "id": 1,
+          "name": "Englis*"
+        }
+      ],
+      "quality": {
+        "quality": {
+          "id": 4,
+          "name": "HDTV-7***",
+          "source": "tv",
+          "resolution": 720,
+          "modifier": "none"
+        },
+        "revision": {
+          "version": 1,
+          "real": 0,
+          "isRepack": false
+        }
+      },
+      "indexerFlags": 0,
+      "mediaInfo": {
+        "audioBitrate": 127867,
+        "audioChannels": 2,
+        "audioCodec": "AAC",
+        "audioLanguages": "und",
+        "audioStreamCount": 1,
+        "videoBitDepth": 8,
+        "videoBitrate": 899638,
+        "videoCodec": "x264",
+        "videoFps": 23.976,
+        "videoDynamicRange": "",
+        "videoDynamicRangeType": "",
+        "resolution": "1280x5**",
+        "runTime": "2:01:2*",
+        "scanType": "Progre*****",
+        "subtitles": ""
+      },
+      "qualityCutoffNotMet": false,
+      "id": 4063
+    },
+    "popularity": 7.7643,
+    "statistics": {
+      "movieFileCount": 1,
+      "sizeOnDisk": 940311188,
+      "releaseGroups": []
+    },
+    "id": 70
+  }
+]

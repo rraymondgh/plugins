@@ -8,6 +8,13 @@
   "permissions": {
     "config": {
       "reason": "To access plugin configuration"
+    },
+    "http": {
+      "reason": "to access sonarr and radarr",
+      "allowedUrls": {
+        "http://*?tmdbId=*": ["GET"]
+      },
+      "allowLocalNetwork": true
     }
   }
 }

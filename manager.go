@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/lifecycleapi"
 	"github.com/rraymondgh/plugins/core/metrics"
 	"github.com/rraymondgh/plugins/schema"
 	"github.com/rraymondgh/plugins/utils/singleton"
@@ -50,7 +50,7 @@ type plugin struct {
 	Capabilities     []string
 	WasmPath         string
 	Manifest         *schema.PluginManifest // Loaded manifest
-	Runtime          api.WazeroNewRuntime
+	Runtime          lifecycleapi.WazeroNewRuntime
 	ModConfig        wazero.ModuleConfig
 	compilationReady chan struct{}
 	compilationErr   error

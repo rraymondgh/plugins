@@ -1,0 +1,245 @@
+[
+  {
+    "title": "Bumble***",
+    "originalTitle": "Bumble***",
+    "originalLanguage": {
+      "id": 1,
+      "name": "Englis*"
+    },
+    "alternateTitles": [
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Bright********",
+        "id": 725
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Transf********************",
+        "id": 726
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Transf*****************",
+        "id": 727
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Bumble********",
+        "id": 5884
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "变形金刚6",
+        "id": 6273
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "大黄蜂大电影",
+        "id": 6274
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "变形金刚外传****",
+        "id": 6275
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "大黄蜂",
+        "id": 6276
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "大黃蜂",
+        "id": 6313
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "ტრანსფ*****************",
+        "id": 7395
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "變形金剛 6*****",
+        "id": 7501
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Трансф***************",
+        "id": 8025
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Трансф********",
+        "id": 8026
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "Трансф************",
+        "id": 8027
+      },
+      {
+        "sourceType": "tmdb",
+        "movieMetadataId": 103,
+        "title": "变形金刚：大**",
+        "id": 8846
+      }
+    ],
+    "secondaryYearSourceId": 0,
+    "sortTitle": "bumble***",
+    "sizeOnDisk": 1151316895,
+    "status": "releas**",
+    "overview": "On the*************************************************************************************************************************************************************************************************************************************************************************************************************",
+    "inCinemas": "2018-1**************",
+    "physicalRelease": "2019-0**************",
+    "digitalRelease": "2019-0**************",
+    "releaseDate": "2019-0**************",
+    "images": [
+      {
+        "coverType": "poster",
+        "url": "/Media*************************************************",
+        "remoteUrl": "https:*************************************************************"
+      },
+      {
+        "coverType": "fanart",
+        "url": "/Media*************************************************",
+        "remoteUrl": "https:*************************************************************"
+      }
+    ],
+    "website": "https:******************************************",
+    "year": 2018,
+    "youTubeTrailerId": "lcwmDA*****",
+    "studio": "Paramo************",
+    "path": "/movie******************",
+    "qualityProfileId": 1,
+    "hasFile": true,
+    "movieFileId": 3576,
+    "monitored": true,
+    "minimumAvailability": "releas**",
+    "isAvailable": true,
+    "folderName": "/movie******************",
+    "runtime": 113,
+    "cleanTitle": "bumble***",
+    "imdbId": "tt4701***",
+    "tmdbId": 424783,
+    "titleSlug": "424783",
+    "rootFolderPath": "/movie*",
+    "certification": "PG-13",
+    "genres": [
+      "Action",
+      "Advent***",
+      "Scienc*********"
+    ],
+    "keywords": [
+      "1980s",
+      "adorin*",
+      "based ******",
+      "during**************",
+      "robot",
+      "spin o**",
+      "techno****"
+    ],
+    "tags": [],
+    "added": "2023-0**************",
+    "ratings": {
+      "imdb": {
+        "votes": 203323,
+        "value": 6.7,
+        "type": "user"
+      },
+      "tmdb": {
+        "votes": 6415,
+        "value": 6.7,
+        "type": "user"
+      },
+      "metacritic": {
+        "votes": 0,
+        "value": 66,
+        "type": "user"
+      },
+      "rottenTomatoes": {
+        "votes": 0,
+        "value": 91,
+        "type": "user"
+      },
+      "trakt": {
+        "votes": 17197,
+        "value": 7.17311,
+        "type": "user"
+      }
+    },
+    "movieFile": {
+      "movieId": 103,
+      "relativePath": "Bumble**************************",
+      "path": "/movie***************************************************",
+      "size": 1151316895,
+      "dateAdded": "2025-0**************",
+      "sceneName": "Bumble***************************",
+      "releaseGroup": "HUD",
+      "edition": "",
+      "languages": [
+        {
+          "id": 1,
+          "name": "Englis*"
+        }
+      ],
+      "quality": {
+        "quality": {
+          "id": 20,
+          "name": "Bluray*****",
+          "source": "bluray",
+          "resolution": 480,
+          "modifier": "none"
+        },
+        "revision": {
+          "version": 1,
+          "real": 0,
+          "isRepack": false
+        }
+      },
+      "indexerFlags": 0,
+      "mediaInfo": {
+        "audioBitrate": 0,
+        "audioChannels": 5.1,
+        "audioCodec": "AAC",
+        "audioLanguages": "eng",
+        "audioStreamCount": 1,
+        "videoBitDepth": 8,
+        "videoBitrate": 0,
+        "videoCodec": "x264",
+        "videoFps": 23.976,
+        "videoDynamicRange": "",
+        "videoDynamicRangeType": "",
+        "resolution": "720x40*",
+        "runTime": "1:53:5*",
+        "scanType": "Progre*****",
+        "subtitles": ""
+      },
+      "originalFilePath": "Bumble*****************************************************************",
+      "qualityCutoffNotMet": false,
+      "id": 3576
+    },
+    "popularity": 6.0263,
+    "statistics": {
+      "movieFileCount": 1,
+      "sizeOnDisk": 1151316895,
+      "releaseGroups": [
+        "HUD"
+      ]
+    },
+    "id": 103
+  }
+]

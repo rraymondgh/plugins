@@ -7,6 +7,8 @@ import (
 	"log"
 
 	"github.com/rraymondgh/plugins/api"
+	"github.com/rraymondgh/plugins/api/lifecycleapi"
+	"github.com/rraymondgh/plugins/api/testapi"
 )
 
 // MultiPlugin implements the MetadataAgent interface for testing
@@ -14,14 +16,14 @@ type MultiPlugin struct{}
 
 var ErrNotFound = api.ErrNotFound
 
-func (MultiPlugin) SendTo(ctx context.Context, req *api.TestSendToRequest) (*api.TestSendToResponse, error) {
-	return &api.TestSendToResponse{}, nil
+func (MultiPlugin) ConfigTest(ctx context.Context, req *testapi.SimpleRequest) (*testapi.SimpleResponse, error) {
+	return &testapi.SimpleResponse{}, nil
 }
 
-func (MultiPlugin) OnInit(ctx context.Context, req *api.InitRequest) (*api.InitResponse, error) {
+func (MultiPlugin) OnInit(ctx context.Context, req *lifecycleapi.InitRequest) (*lifecycleapi.InitResponse, error) {
 	log.Printf("OnInit called with %v", req)
 
-	return &api.InitResponse{}, nil
+	return &lifecycleapi.InitResponse{}, nil
 }
 
 // Required by Go WASI build
@@ -29,5 +31,5 @@ func main() {}
 
 // Register the service implementations
 func init() {
-	api.RegisterLifecycleManagement(MultiPlugin{})
+	lifecycleapi.RegisterLifecycleManagement(MultiPlugin{})
 }

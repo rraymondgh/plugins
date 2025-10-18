@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package testapi;
+
+option go_package = "api/testapi";
+
+// go:plugin type=plugin version=1
+service IntegrationTest {
+  rpc ConfigTest(SimpleRequest) returns (SimpleResponse) {}
+  rpc HTTPTest(HttpRequest) returns (SimpleResponse) {}
+}
+
+message SimpleRequest {
+  string ID = 1;
+}
+
+message SimpleResponse {
+  string message = 1;
+}
+
+message HttpRequest {
+  string url = 1;
+  string apikey = 2;
+  string id = 3;
+  google.protobuf.Timestamp RequestedAt = 4;
+
+}
+

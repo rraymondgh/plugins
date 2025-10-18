@@ -5,15 +5,15 @@
 
 import { Writer, Reader } from "as-proto/assembly";
 
-export class TestSendToResponse {
-  static encode(message: TestSendToResponse, writer: Writer): void {
+export class SimpleResponse {
+  static encode(message: SimpleResponse, writer: Writer): void {
     writer.uint32(10);
     writer.string(message.message);
   }
 
-  static decode(reader: Reader, length: i32): TestSendToResponse {
+  static decode(reader: Reader, length: i32): SimpleResponse {
     const end: usize = length < 0 ? reader.end : reader.ptr + length;
-    const message = new TestSendToResponse();
+    const message = new SimpleResponse();
 
     while (reader.ptr < end) {
       const tag = reader.uint32();

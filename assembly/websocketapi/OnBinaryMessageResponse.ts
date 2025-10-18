@@ -5,23 +5,16 @@
 
 import { Writer, Reader } from "as-proto/assembly";
 
-export class TestSendToRequest {
-  static encode(message: TestSendToRequest, writer: Writer): void {
-    writer.uint32(10);
-    writer.string(message.iD);
-  }
+export class OnBinaryMessageResponse {
+  static encode(message: OnBinaryMessageResponse, writer: Writer): void {}
 
-  static decode(reader: Reader, length: i32): TestSendToRequest {
+  static decode(reader: Reader, length: i32): OnBinaryMessageResponse {
     const end: usize = length < 0 ? reader.end : reader.ptr + length;
-    const message = new TestSendToRequest();
+    const message = new OnBinaryMessageResponse();
 
     while (reader.ptr < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
-        case 1:
-          message.iD = reader.string();
-          break;
-
         default:
           reader.skipType(tag & 7);
           break;
@@ -31,9 +24,5 @@ export class TestSendToRequest {
     return message;
   }
 
-  iD: string;
-
-  constructor(iD: string = "") {
-    this.iD = iD;
-  }
+  constructor() {}
 }

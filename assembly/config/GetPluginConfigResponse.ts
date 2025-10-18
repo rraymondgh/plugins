@@ -21,6 +21,12 @@ export class GetPluginConfigResponse {
         writer.ldelim();
       }
     }
+
+    writer.uint32(16);
+    writer.bool(message.loggingEnabled);
+
+    writer.uint32(26);
+    writer.string(message.pluginID);
   }
 
   static decode(reader: Reader, length: i32): GetPluginConfigResponse {
@@ -66,6 +72,14 @@ export class GetPluginConfigResponse {
           }
           break;
 
+        case 2:
+          message.loggingEnabled = reader.bool();
+          break;
+
+        case 3:
+          message.pluginID = reader.string();
+          break;
+
         default:
           reader.skipType(tag & 7);
           break;
@@ -76,8 +90,16 @@ export class GetPluginConfigResponse {
   }
 
   config: Map<string, string>;
+  loggingEnabled: bool;
+  pluginID: string;
 
-  constructor(config: Map<string, string> = new Map()) {
+  constructor(
+    config: Map<string, string> = new Map(),
+    loggingEnabled: bool = false,
+    pluginID: string = ""
+  ) {
     this.config = config;
+    this.loggingEnabled = loggingEnabled;
+    this.pluginID = pluginID;
   }
 }

@@ -15,4 +15,6 @@ message GetPluginConfigRequest {
 
 message GetPluginConfigResponse {
     map<string, string> config = 1;
+    bool loggingEnabled = 2;
+    string pluginID = 3;
 } 
